@@ -26,9 +26,13 @@ fun main() {
 fun Application.module() {
     val logger = LoggerFactory.getLogger("ConfraAjuda")
 
-    // 1. Carregar Configurações do application.conf ou Variáveis de Ambiente
-    val token = environment.config.propertyOrNull("confrapix.token")?.getString() ?: ""
-    val apiUrl = environment.config.propertyOrNull("confrapix.apiUrl")?.getString() ?: "https://api.confrapix.com.br/api"
+    // 1. Carregar Configurações das Variáveis de Ambiente (prioridade) ou do application.conf
+    val token = System.getenv("CONFRAPIX_TOKEN") 
+        ?: environment.config.propertyOrNull("confrapix.token")?.getString() 
+        ?: ""
+    val apiUrl = System.getenv("CONFRAPIX_API_URL") 
+        ?: environment.config.propertyOrNull("confrapix.apiUrl")?.getString() 
+        ?: "https://api.confrapix.com.br/api"
     val mockMode = when {
         System.getenv("CONFRAPIX_MOCK_MODE") != null -> System.getenv("CONFRAPIX_MOCK_MODE").toBoolean()
         token.isNotEmpty() && !token.startsWith("mock") -> false
