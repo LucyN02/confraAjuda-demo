@@ -29,8 +29,11 @@ fun Application.module() {
     // 1. Carregar Configurações do application.conf ou Variáveis de Ambiente
     val token = environment.config.propertyOrNull("confrapix.token")?.getString() ?: ""
     val apiUrl = environment.config.propertyOrNull("confrapix.apiUrl")?.getString() ?: "https://api.confrapix.com.br/api"
-    val mockMode = environment.config.propertyOrNull("confrapix.mockMode")?.getString()?.toBoolean() 
-        ?: (token.isEmpty() || token.startsWith("mock"))
+    val mockMode = when {
+        System.getenv("CONFRAPIX_MOCK_MODE") != null -> System.getenv("CONFRAPIX_MOCK_MODE").toBoolean()
+        token.isNotEmpty() && !token.startsWith("mock") -> false
+        else -> true
+    }
 
     logger.info("Inicializando ConfraAjuda (Refatorado).")
     logger.info("Configuração - Mock Mode: $mockMode | API URL: $apiUrl | Token Configurado: ${token.isNotEmpty()}")
