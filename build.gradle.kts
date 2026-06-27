@@ -36,3 +36,13 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach 
         jvmTarget = "21"
     }
 }
+
+tasks.jar {
+    manifest {
+        attributes["Main-Class"] = "com.confraajuda.ApplicationKt"
+    }
+    val dependencies = configurations.runtimeClasspath.get().map { zipTree(it) }
+    from(dependencies)
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
