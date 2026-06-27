@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ConfraAjuda - Faça a diferença apoiando campanhas locais através de pagamentos Pix instantâneos.">
+    <title>ConfraAjuda | Campanhas Comunitárias com Pix</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Local Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="glass-bg"></div>
+
+    <!-- Header Section -->
+    <header class="main-header">
+        <div class="container header-container">
+            <div class="logo-area" id="logo-brand">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-hand-holding-heart"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>Confra<span>Ajuda</span></h1>
+                    <small>Hackathon Confrapag & UNIESP</small>
+                </div>
+            </div>
+            <nav class="nav-bar">
+                <a href="#campanhas" class="nav-link active"><i class="fa-solid fa-list-check"></i> Campanhas</a>
+                <a href="#sobre" class="nav-link" id="nav-about"><i class="fa-solid fa-circle-info"></i> Sobre o TAP</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container hero-container">
+            <div class="hero-content">
+                <span class="badge" id="hero-badge">Tecnologia ConfraPix</span>
+                <h2 class="hero-title">Transforme vidas com um toque</h2>
+                <p class="hero-subtitle">Apoie projetos comunitários locais com transparência, segurança e a rapidez do Pix instantâneo.</p>
+                <div class="hero-actions">
+                    <a href="#campanhas" class="btn btn-primary" id="btn-explore">Explorar Campanhas <i class="fa-solid fa-arrow-down"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content (Campaigns List) -->
+    <main class="main-content container" id="campanhas">
+        <div class="section-title-area">
+            <h3 class="section-title">Campanhas Ativas</h3>
+            <p class="section-desc">Selecione uma causa para apoiar. Todo valor faz a diferença.</p>
+        </div>
+        
+        <div class="campaign-grid" id="campaigns-container">
+            <!-- Loading state -->
+            <div class="loading-spinner-wrapper">
+                <div class="spinner"></div>
+                <p>Carregando campanhas do servidor Kotlin...</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Documento de Visão / TAP Details -->
+    <section class="about-section" id="sobre">
+        <div class="container">
+            <div class="section-title-area">
+                <h3 class="section-title">Documento de Visão & TAP</h3>
+                <p class="section-desc">A estrutura conceitual que deu origem ao projeto para o Hackathon.</p>
+            </div>
+            
+            <div class="tap-grid">
+                <div class="tap-card">
+                    <div class="tap-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                    <h4>Problema</h4>
+                    <p>Instituições locais têm barreiras para receber auxílio financeiro ágil. Doadores desconfiam de métodos lentos e difíceis.</p>
+                </div>
+                <div class="tap-card">
+                    <div class="tap-icon"><i class="fa-solid fa-bullseye"></i></div>
+                    <h4>Objetivo</h4>
+                    <p>Facilitar doações instantâneas com Pix Dinâmico ConfraPix, gerando segurança e confirmação imediata ao doador.</p>
+                </div>
+                <div class="tap-card">
+                    <div class="tap-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                    <h4>Token Protegido</h4>
+                    <p>Todas as chaves da API Confrapag residem em ambiente seguro de servidor Kotlin, protegendo o vendedor contra abusos.</p>
+                </div>
+                <div class="tap-card">
+                    <div class="tap-icon"><i class="fa-solid fa-circle-check"></i></div>
+                    <h4>Entrega e Valor</h4>
+                    <p>O doador visualiza o impacto de sua doação imediatamente na barra de metas após a aprovação automática ou simulada.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container footer-container">
+            <p>&copy; 2026 ConfraAjuda. Desenvolvido para o Hackathon Fullstack Confrapag & UNIESP.</p>
+            <div class="tech-tags">
+                <span class="tag-kotlin"><i class="fa-brands fa-kickstarter-k"></i> Kotlin Ktor</span>
+                <span class="tag-html"><i class="fa-brands fa-html5"></i> HTML5 & CSS3</span>
+                <span class="tag-pix"><i class="fa-solid fa-qrcode"></i> ConfraPix API</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Donation Modal -->
+    <div class="modal-overlay" id="donation-modal">
+        <div class="modal-card">
+            <button class="modal-close-btn" id="btn-close-modal"><i class="fa-solid fa-xmark"></i></button>
+            
+            <!-- Step 1: Form -->
+            <div class="modal-step" id="step-form">
+                <h3 class="modal-title">Apoiar Campanha</h3>
+                <h4 class="modal-campaign-name" id="modal-campaign-title">Nome da Campanha</h4>
+                
+                <form id="donation-form" onsubmit="event.preventDefault();">
+                    <input type="hidden" id="input-campaign-id">
+                    
+                    <div class="form-group">
+                        <label for="input-name">Seu Nome Completo *</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-user"></i>
+                            <input type="text" id="input-name" required placeholder="Ex: João da Silva">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="input-document">CPF ou CNPJ *</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-id-card"></i>
+                            <input type="text" id="input-document" required placeholder="Apenas números (11 ou 14 dígitos)">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="input-amount">Valor da Doação (R$) *</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-brazilian-real-sign"></i>
+                            <input type="number" id="input-amount" required min="5" step="0.01" placeholder="Mínimo R$ 5,00">
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-block" id="btn-submit-donation">
+                        Gerar QR Code Pix <i class="fa-solid fa-qrcode"></i>
+                    </button>
+                </form>
+            </div>
+            
+            <!-- Step 2: Payment (Pix QR Code) -->
+            <div class="modal-step hidden" id="step-payment">
+                <h3 class="modal-title">Efetue o Pagamento</h3>
+                <p class="modal-subtitle">Use seu banco ou carteira digital para ler o QR Code Pix abaixo.</p>
+                
+                <div class="pix-checkout-box">
+                    <div class="qr-code-wrapper">
+                        <!-- Imagem gerada dinamicamente via API publica baseada no pix_code -->
+                        <img id="pix-qr-image" src="" alt="QR Code Pix">
+                        <div class="qr-code-scanner-line"></div>
+                    </div>
+                    
+                    <div class="pix-amount-badge">
+                        <span>Valor:</span> <strong id="pix-amount-display">R$ 0,00</strong>
+                    </div>
+
+                    <div class="pix-copia-e-cola-area">
+                        <label>Pix Copia e Cola:</label>
+                        <div class="copia-cola-box">
+                            <input type="text" id="input-copia-cola" readonly value="...">
+                            <button id="btn-copy-pix" class="btn btn-secondary" title="Copiar código Pix">
+                                <i class="fa-regular fa-copy"></i> Copiar
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="payment-status-monitor">
+                        <div class="spinner-small"></div>
+                        <span id="payment-status-text">Aguardando confirmação do pagamento...</span>
+                    </div>
+
+                    <!-- Expiration Timer -->
+                    <div class="expiration-timer">
+                        <i class="fa-regular fa-clock"></i> Expira em: <span id="timer-display">59:59</span>
+                    </div>
+
+                    <!-- Demo simulation helper -->
+                    <div class="demo-simulation-box">
+                        <p><i class="fa-solid fa-laptop-code"></i> <strong>Modo Demonstração:</strong></p>
+                        <small>Simule a confirmação do pagamento pela API ConfraPix clicando abaixo.</small>
+                        <button type="button" class="btn btn-success btn-sm btn-block" id="btn-simulate-payment">
+                            <i class="fa-solid fa-circle-check"></i> Simular Confirmação Webhook
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Step 3: Success Confirmation -->
+            <div class="modal-step hidden" id="step-success">
+                <div class="success-animation-area">
+                    <div class="checkmark-circle">
+                        <div class="background"></div>
+                        <div class="checkmark draw"></div>
+                    </div>
+                </div>
+                
+                <h3 class="modal-title success-title">Muito Obrigado!</h3>
+                <p class="modal-subtitle">Sua doação foi confirmada com sucesso via ConfraPix.</p>
+                
+                <div class="receipt-box">
+                    <div class="receipt-row">
+                        <span>Doador:</span>
+                        <strong id="receipt-donor-name">-</strong>
+                    </div>
+                    <div class="receipt-row">
+                        <span>Valor doado:</span>
+                        <strong id="receipt-amount">-</strong>
+                    </div>
+                    <div class="receipt-row">
+                        <span>Código do Recibo:</span>
+                        <code id="receipt-id">-</code>
+                    </div>
+                </div>
+                
+                <button type="button" class="btn btn-primary btn-block" id="btn-finish-donation">
+                    Voltar para Campanhas <i class="fa-solid fa-house"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div class="toast" id="toast-notification">
+        <i class="fa-solid fa-circle-info"></i> <span id="toast-message">Mensagem de aviso</span>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
