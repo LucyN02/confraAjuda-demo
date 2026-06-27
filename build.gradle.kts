@@ -37,6 +37,11 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach 
     }
 }
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
 tasks.jar {
     manifest {
         attributes["Main-Class"] = "com.confraajuda.ApplicationKt"
@@ -45,4 +50,5 @@ tasks.jar {
     from(dependencies)
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
+
 
